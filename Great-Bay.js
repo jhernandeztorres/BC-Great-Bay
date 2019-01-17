@@ -9,13 +9,24 @@ const connection = mysql.createConnection({
     database: "great_bay_db"
 });
 
-connection.connect(function(err){
-    if(err) throw err;
-    console.log("Connected as id " + connection.threadId + "\n");
-    createProduct();
-});
+function start(){
+    inquirer.prompt({
+        name: "start",
+        type: "list",
+        message: "What is your choice?",
+        choices: ["Bid on item", "Post an item", "Manage Posts"]
+    })
+}
 
-function createProduct(){
+function bidProduct(){
+
+}
+
+function postProduct(){
+    connection.connect(function(err){
+        if(err) throw err;
+        console.log("Connected as id " + connection.threadId + "\n");
+    });
     console.log("Inserting a new product...\n");
     inquirer.prompt({
         name: "input",
@@ -24,9 +35,20 @@ function createProduct(){
     },
     {
         name: "title",
-        type: "",
+        type: "input",
         message: "Product Title"
-    })
+    },
+    {
+        name: "price",
+        type: "input",
+        message: "Product Price"
+    },
+    {
+        name: "quantity",
+        type: "input",
+        message: "Product Quantity"
+    }
+    )
     .then((data) => {
         let query = connection.query(
             "INSERT INTO products SET ?",
@@ -34,10 +56,30 @@ function createProduct(){
                 title: data.title,
                 price: data.price,
                 description: data.description
+            },
+            function(err, res){
+                console.log(res.affectedRows + " product inserted!\n");
             }
-        )
+        );
+        start();
     })
-    
-        
-    )
 }
+
+function createProduct(){
+    
+}
+
+function readProduct(){
+
+}
+
+function updateProduct(){
+
+}
+
+function deleteProduct(){
+
+}
+
+
+start();

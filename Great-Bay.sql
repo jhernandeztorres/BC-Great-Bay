@@ -7,8 +7,9 @@ USE great_bay_db;
 CREATE TABLE products(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(45) NULL,
-    price FLOAT NULL,
+    price DECIMAL NULL,
     quantity INT NULL,
+    'time' TIMESTAMP,
     'description' VARCHAR(255) NULL
 );
 
